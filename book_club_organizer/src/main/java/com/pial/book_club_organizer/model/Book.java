@@ -2,8 +2,10 @@ package com.pial.book_club_organizer.model;
 
 
 import jakarta.persistence.*;
+import org.springframework.stereotype.Component;
 
 @Entity
+@Component
 public class Book {
 
 

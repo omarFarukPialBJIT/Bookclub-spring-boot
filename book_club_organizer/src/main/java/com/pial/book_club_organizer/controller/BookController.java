@@ -6,11 +6,10 @@ import com.pial.book_club_organizer.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/book")
@@ -19,9 +18,20 @@ public class BookController {
     @Autowired
     private BookService bookService;
     @GetMapping("/all")
-    public ResponseEntity<List<Book>> getAllCandidate() {
+    public ResponseEntity<List<Book>> getAllBook() {
         List<Book> bookList = bookService.getAllBook();
         return new ResponseEntity<>(bookList, HttpStatus.OK);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Book> getBookById(@PathVariable Integer id) {
+       Optional<Book> book = bookService.getBookById(id);
+        return new ResponseEntity<>(book.get(), HttpStatus.OK);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<Void> addBook(@RequestBody Book book) {
+        bookService.addBook(book);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
 }
